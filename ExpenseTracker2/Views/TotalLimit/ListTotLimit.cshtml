@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ExpenseTracker2.Models.Limit>
+
+@{
+    ViewBag.Title = "ListTotLimit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-family:Georgia">List TotalLimit</h2>
+
+@if (TempData["AlertMsg"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong>@TempData["AlertMsg"]
+        <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+
+    </div>
+}
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+        <th>
+           Total Limit
+        </th>
+        <th>Action</th>
+    </tr>
+        </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.totLimit)
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <a href=" @Url.Action("EditLimit","TotalLimit",new {@ID=item.Id})">
+                            <input type="button" class="btn-success btn" value="Edit" />
+                        </a>
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

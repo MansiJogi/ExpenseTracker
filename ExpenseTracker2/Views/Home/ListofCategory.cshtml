@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ExpenseTracker2.Models.Category>
+@if (TempData["AlertMsg"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong>@TempData["AlertMsg"]
+        <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+
+    </div>
+}
+<p>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a href=" @Url.Action("Create","Home")">
+                <input type="button" class="btn-info btn" value="Create New" />
+            </a>
+
+        </div>
+    </div>
+</p>
+
+
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.catName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.catExpLimit)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@item.catName, "Index", "Expense", new { cat = @item.catId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.catExpLimit)
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <a href=" @Url.Action("Create","Home",new {@ID=item.catId})">
+                            <input type="button" class="btn-success btn" value="Edit" />
+                        </a>
+                        <a href=" @Url.Action("Delete","Home",new {@ID=item.catId})">
+
+                            <input type="button" class="btn-danger btn" value="Delete" />
+                        </a>
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+@if (TempData["Remain"] != null)
+{
+    <div class="card text-center">
+        <strong>Remain Amount Is :@TempData["Remain"]</strong>
+        <button type="button" class="close" data-dismiss="alert">
+
+        </button>
+    </div>
+}

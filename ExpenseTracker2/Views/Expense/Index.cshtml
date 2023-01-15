@@ -1,0 +1,101 @@
+﻿@model IEnumerable<ExpenseTracker2.Models.Expense>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Filter Expenses </h2>
+@if (TempData["AlertMsg"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong>@TempData["AlertMsg"]
+        <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+
+    </div>
+}
+
+<html>
+<body>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Categories.catName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    Category Expense Limit
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categories.catName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categories.catExpLimit)
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <a href=" @Url.Action("Create","Expense",new {@ID=item.exId})">
+                                <input type="button" class="btn-success btn" value="Edit" />
+                            </a>
+                            <a href=" @Url.Action("Delete","Expense",new {@ID=item.exId})">
+
+                                <input type="button" class="btn-danger btn" value="Delete" />
+                            </a>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+
+        }
+
+    </table>
+    <strong>Total Amount Is :@Model.Sum(h => h.Amount)</strong>
+    @if (TempData["Remain"] != null)
+    {
+        <div class="card text-center">
+            <strong>Remain Amount Is :@TempData["Remain"]</strong>
+            <button type="button" class="close" data-dismiss="alert">
+              
+            </button>
+        </div>
+    }
+
+</body>
+</html>
